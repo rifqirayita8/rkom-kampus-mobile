@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:rkom_kampus/gen/assets.gen.dart';
+import 'package:rkom_kampus/widgets/custom_elevated_button.dart';
+import 'package:rkom_kampus/widgets/custom_text_button.dart';
+import 'package:rkom_kampus/widgets/custom_textfield.dart';
+import '../../../../utils/colors.dart';
 
 class LoginBottomSheet extends StatefulWidget {
   const LoginBottomSheet({super.key});
@@ -12,6 +18,9 @@ class _LoginBottomSheetState extends State<LoginBottomSheet>
 
   late final AnimationController _controller;
   late final Animation<Offset> _animation;
+  final TextEditingController _nameEmailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  bool _obscureText = true;
 
   @override
   void initState() {
@@ -48,14 +57,71 @@ class _LoginBottomSheetState extends State<LoginBottomSheet>
           color: Colors.white,
           borderRadius: BorderRadius.circular(20.0),
         ),
-        child: const Text(
-          'Login Bottom Sheet',
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: Colors.black87,
-          ),
-          textAlign: TextAlign.center,
+        child: Column(
+          children: [
+            Text(
+              'Login',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: AppColor.primaryColor,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            Text(
+              'Your journey is finally here',
+              style: TextStyle(
+                fontSize: 16,
+                color: AppColor.mediumGray,
+              ),
+            ),
+            Form(
+              child: Column(
+                children: [
+                  customTextField(
+                    label: 'Username or Email', 
+                    controller: _nameEmailController,
+                    keyboardType: TextInputType.emailAddress,
+                  ),
+                  const SizedBox(height: 10),
+                  customTextField(
+                    label: 'Enter your password', 
+                    controller: _passwordController,
+                    obscureText: _obscureText,
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          _obscureText = !_obscureText;
+                        });
+                      }, 
+                      icon: SvgPicture.asset(
+                        _obscureText
+                          ? Assets.images.common.eye
+                          : Assets.images.common.eyeOff,
+                      )
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  customTextButton(
+                    label1: '', 
+                    label2: 'Forgot Password?', 
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    isSpread: false,
+                    onTap: () {}
+                  ),
+                  customElevatedButton(
+                    onPressed: () {}, 
+                    label: 'Login'
+                  ),
+                  customTextButton(
+                    label1: 'Don\'t have an account? ', 
+                    label2: 'Sign Up', 
+                    onTap: () {}
+                  ),
+                ],
+              )
+            )
+          ],
         ),
       ),
     );

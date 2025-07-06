@@ -12,6 +12,9 @@ class $AssetsImagesGen {
 
   /// Directory path: assets/images/auth
   $AssetsImagesAuthGen get auth => const $AssetsImagesAuthGen();
+
+  /// Directory path: assets/images/common
+  $AssetsImagesCommonGen get common => const $AssetsImagesCommonGen();
 }
 
 class $AssetsImagesAuthGen {
@@ -25,6 +28,19 @@ class $AssetsImagesAuthGen {
 
   /// List of all assets
   List<String> get values => [bgKampus, bgKampusPng];
+}
+
+class $AssetsImagesCommonGen {
+  const $AssetsImagesCommonGen();
+
+  /// File path: assets/images/common/eye-off.svg
+  String get eyeOff => 'assets/images/common/eye-off.svg';
+
+  /// File path: assets/images/common/eye.svg
+  String get eye => 'assets/images/common/eye.svg';
+
+  /// List of all assets
+  List<String> get values => [eyeOff, eye];
 }
 
 class Assets {

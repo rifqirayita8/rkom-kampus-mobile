@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rkom_kampus/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:rkom_kampus/gen/fonts.gen.dart';
 import 'package:rkom_kampus/utils/colors.dart';
+import 'package:rkom_kampus/widgets/custom_elevated_button.dart';
+import 'package:rkom_kampus/widgets/custom_text_button.dart';
 
 class LandingPageWidget extends StatelessWidget {
   const LandingPageWidget({super.key});
@@ -28,60 +30,21 @@ class LandingPageWidget extends StatelessWidget {
           Expanded(
             child: Column(
               children: [
-                InkWell(
-                  onTap: () {
-                    context.read<AuthBloc>().add(AuthLogin(email: 'a', password: 'a'));
-                  },
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                    child: const Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(width: 10),
-                          Text('Login',
-                            style: TextStyle(
-                              fontFamily: FontFamily.montserratBold,
-                              color: AppColor.primaryColor,
-                              fontSize: 20
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                customElevatedButton(
+                  onPressed: () {
+                    context.read<AuthBloc>().add(AuthLogin(email: 'email', password: 'password'));
+                  }, 
+                  label: 'Login',
+                  textColor: AppColor.primaryColor,
+                  backgroundColor: AppColor.secondaryColor,
                 ),
                 const SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      'Don\'t have an account? ',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontFamily: FontFamily.montserratRegular,
-                        color: Colors.white,
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        context.read<AuthBloc>().add(AuthRegister(name: 'a', email: 'a', password: 'a'));
-                      },
-                      child: const Text(
-                        'Sign Up',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontFamily: FontFamily.montserratBold,
-                          decoration: TextDecoration.underline,
-                          decorationStyle: TextDecorationStyle.dashed,
-                          color: AppColor.hippieBlue,
-                        ),
-                      ),
-                    ),
-                  ],
+                customTextButton(
+                  label1: 'Don\'t have an account? ', 
+                  label2: 'Sign Up',
+                  textColor1: Colors.white,
+                  textColor2: AppColor.hippieBlue, 
+                  onTap: () => context.read<AuthBloc>().add(AuthRegister(name: 'name', email: 'email', password: 'password'))
                 ),
               ],
             ),

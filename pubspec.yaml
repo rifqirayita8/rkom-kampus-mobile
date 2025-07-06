@@ -76,6 +76,7 @@ flutter:
   assets:
     - assets/images/
     - assets/images/auth/
+    - assets/images/common/
   
   fonts:
     - family: Montserrat-Light
