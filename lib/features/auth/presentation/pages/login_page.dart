@@ -10,6 +10,8 @@ import 'package:rkom_kampus/features/auth/presentation/widgets/landing_page_widg
 import 'package:rkom_kampus/features/auth/presentation/widgets/login_bottom_sheet.dart';
 import 'package:rkom_kampus/gen/assets.gen.dart';
 
+import '../widgets/register_bottom_sheet.dart';
+
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -45,11 +47,9 @@ class LoginPage extends StatelessWidget {
                     alignment: Alignment.bottomCenter,
                     child: const LoginBottomSheet());
                 case AuthView.register:
-                  return const Center(
-                    child: Text(
-                      'Register Page',
-                      style: TextStyle(fontSize: 24, color: Colors.white),
-                    ),
+                  return Align(
+                    alignment: Alignment.bottomCenter,
+                    child: const RegisterBottomSheet(),
                   );
               }
             }

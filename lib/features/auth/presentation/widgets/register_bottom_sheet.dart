@@ -1,30 +1,26 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:rkom_kampus/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:rkom_kampus/features/auth/presentation/bloc/auth_form_cubit.dart';
-import 'package:rkom_kampus/features/auth/presentation/widgets/landing_page_widget.dart';
-import 'package:rkom_kampus/gen/assets.gen.dart';
-import 'package:rkom_kampus/gen/fonts.gen.dart';
-import 'package:rkom_kampus/widgets/auth_bottom_sheet_header.dart';
-import 'package:rkom_kampus/widgets/custom_elevated_button.dart';
-import 'package:rkom_kampus/widgets/custom_text_button.dart';
-import 'package:rkom_kampus/widgets/custom_textfield.dart';
-import '../../../../utils/colors.dart';
-import '../bloc/auth_view_cubit.dart';
-import '../pages/coba.dart';
+import 'package:rkom_kampus/features/auth/presentation/bloc/auth_view_cubit.dart';
 
-class LoginBottomSheet extends StatefulWidget {
-  const LoginBottomSheet({super.key});
+import '../../../../gen/assets.gen.dart';
+import '../../../../gen/fonts.gen.dart';
+import '../../../../widgets/auth_bottom_sheet_header.dart';
+import '../../../../widgets/custom_elevated_button.dart';
+import '../../../../widgets/custom_text_button.dart';
+import '../../../../widgets/custom_textfield.dart';
+import '../bloc/auth_bloc.dart';
+import '../bloc/auth_form_cubit.dart';
+
+class RegisterBottomSheet extends StatefulWidget {
+  const RegisterBottomSheet({super.key});
 
   @override
-  State<LoginBottomSheet> createState() => _LoginBottomSheetState();
+  State<RegisterBottomSheet> createState() => _RegisterBottomSheetState();
 }
 
-class _LoginBottomSheetState extends State<LoginBottomSheet> 
-    with SingleTickerProviderStateMixin {
+class _RegisterBottomSheetState extends State<RegisterBottomSheet> 
+  with SingleTickerProviderStateMixin {
 
   late final AnimationController _animationController;
   late final Animation<Offset> _animation;
@@ -66,13 +62,14 @@ class _LoginBottomSheetState extends State<LoginBottomSheet>
               child: Column(
                 children: [
                   ...authBottomSheetHeader(
-                    title1: 'Login', 
-                    title2: 'Your journey is finally here'
+                    title1: 'Create Your Account', 
+                    title2: 'Create your account to start your journey'
                   ),
                   Form(
                     child: BlocBuilder<AuthFormCubit, AuthFormState>(
                       builder: (context, formState) {
                         return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             BlocBuilder<AuthBloc, AuthState>(
                               builder: (context, state) {
@@ -90,8 +87,24 @@ class _LoginBottomSheetState extends State<LoginBottomSheet>
                                 }
                               }
                             ),
+                            Text(
+                              'Full Name',
+                              textAlign: TextAlign.start,
+                            ),
                             customTextField(
-                              label: 'Username or Email', 
+                              label: 'Enter your full name', 
+                              initialValue: formState.email,
+                              keyboardType: TextInputType.name,
+                              onChanged: (val) {
+                                context.read<AuthFormCubit>().updateFullName(val);
+                              }
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              'Email',
+                            ),
+                            customTextField(
+                              label: 'Enter your email address', 
                               initialValue: formState.email,
                               keyboardType: TextInputType.emailAddress,
                               onChanged: (val) {
@@ -99,6 +112,9 @@ class _LoginBottomSheetState extends State<LoginBottomSheet>
                               }
                             ),
                             const SizedBox(height: 10),
+                            Text(
+                              'Password'
+                            ),
                             customTextField(
                               label: 'Enter your password', 
                               initialValue: formState.password,
@@ -117,33 +133,28 @@ class _LoginBottomSheetState extends State<LoginBottomSheet>
                                 context.read<AuthFormCubit>().updatePassword(val);
                               }
                             ),
-                            const SizedBox(height: 5),
-                            customTextButton(
-                              label1: '', 
-                              label2: 'Forgot Password?', 
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              isSpread: false,
-                              onTap: () {}
-                            ),
+                            const SizedBox(height: 50),
                             customElevatedButton(
                               onPressed: () {
-                                context.read<AuthBloc>().add(AuthLogin(
-                                  email: formState.email, 
-                                  password: formState.password
-                                  )
-                                );
+                                context.read<AuthBloc>().add(
+                                  AuthRegister(
+                                    fullName: formState.fullName, 
+                                    email: formState.email, 
+                                    password: formState.password
+                                    )
+                                  );
                               }, 
-                              label: 'Login'
+                              label: 'Sign Up'
                             ),
                             const SizedBox(height: 10),
                             customTextButton(
-                              label1: 'Don\'t have an account? ', 
-                              label2: 'Sign Up', 
+                              label1: 'Already have account? ', 
+                              label2: 'Sign In', 
                               onTap: () {
                                 context.read<AuthFormCubit>().reset();
                                 context.read<AuthBloc>().add(const AuthReset());
-                                context.read<AuthViewCubit>().showRegister();
-                              }
+                                context.read<AuthViewCubit>().showLogin();
+                              } 
                             ),
                           ],
                         ); 

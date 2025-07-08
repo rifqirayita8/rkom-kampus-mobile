@@ -7,6 +7,12 @@ abstract class AuthRemoteDatasource {
     String email,
     String password,
   );
+
+  Future<String> authRegister(
+    String fullName,
+    String email,
+    String password,
+  );
 }
 
 class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
@@ -37,6 +43,30 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
         return token;
       } else if (response.statusCode== 400) {
         throw GeneralException(message: response.data['message']);
+      }
+      throw GeneralException(message: response.data['message'] ?? 'An error occurred');
+
+    }on DioException catch (e) {
+      throw GeneralException(message: e.response!.data['message'] ?? 'An error occurred');
+    }
+  }
+  
+  @override
+  Future<String> authRegister(String fullName, String email, String password) async {
+    try {
+      final response= await dio.post(
+        '/auth/register',
+        data:  {
+          'username': fullName,
+          'email': email,
+          'password': password,
+          'confirmPassword': password,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final msg= response.data['message'];
+        return msg;
       }
       throw GeneralException(message: response.data['message'] ?? 'An error occurred');
 

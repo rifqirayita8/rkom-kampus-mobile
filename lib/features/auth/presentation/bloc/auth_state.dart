@@ -6,42 +6,9 @@ abstract class AuthState extends Equatable {
   @override
   List<Object> get props => [];
 }
-final class AuthLandingView extends AuthState {
-  const AuthLandingView();
 
-  @override
-  List<Object> get props => [];
-}
-
-final class AuthLoginView extends AuthState {
-  final String email;
-  final String password;
-  final bool isObscure;
-
-  const AuthLoginView({
-    this.email = '',
-    this.password = '',
-    this.isObscure = true,
-  });
-
-  AuthLoginView copyWith({
-    String? email,
-    String? password,
-    bool? isObscure,
-  }) {
-    return AuthLoginView(
-      email: email ?? this.email,
-      password: password ?? this.password,
-      isObscure: isObscure ?? this.isObscure,
-    );
-  }
-
-  @override
-  List<Object> get props => [email, password, isObscure];
-}
-
-final class AuthRegisterView extends AuthState {
-  const AuthRegisterView();
+final class AuthInitial extends AuthState {
+  const AuthInitial();
 
   @override
   List<Object> get props => [];

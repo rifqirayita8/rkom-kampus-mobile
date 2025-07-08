@@ -18,4 +18,15 @@ class AuthRepositoryImpl extends AuthRepository{
       return left(Failure(e.message));
     }
   }
+  
+  @override
+  Future<Either<Failure, String>> authRegister(String fullName, String email, String password) async {
+    try {
+      final response= await authRemoteDatasource.authRegister(fullName, email, password);
+      return right(response);
+
+    } on GeneralException catch (e) {
+      return left(Failure(e.message));
+    }
+  }
 }

@@ -11,11 +11,16 @@ Future<void> initInjection() async {
   myInjection.registerFactory(
     () => AuthBloc(
       userLogin: myInjection(),
+      userRegister: myInjection(),
     ),
   );
 
   myInjection.registerLazySingleton(
     () => UserLogin(authRepository: myInjection()),
+  );
+
+  myInjection.registerLazySingleton(
+    () => UserRegister(authRepository: myInjection()),
   );
 
   myInjection.registerLazySingleton<AuthRepository>(

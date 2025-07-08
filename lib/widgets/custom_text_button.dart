@@ -24,7 +24,8 @@ Widget customTextButton({
           color: textColor1,
         ),
       ),
-      InkWell(
+      GestureDetector(       
+        behavior: HitTestBehavior.translucent,
         onTap: onTap,
         child: Text(
           label2,
@@ -34,7 +35,7 @@ Widget customTextButton({
             color: textColor2,
           ),
         ),
-      ),
+      )
     ],
   );
 }
