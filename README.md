@@ -1,6 +1,6 @@
 # rkom_kampus
 
-A new Flutter project.
+THE CLEANEST CODE I CAN EVER PRODUCE. NO CAP
 
 ## Getting Started
 
