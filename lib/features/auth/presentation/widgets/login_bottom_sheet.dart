@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rkom_kampus/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:rkom_kampus/features/auth/presentation/bloc/auth_form_cubit.dart';
 import 'package:rkom_kampus/features/auth/presentation/widgets/landing_page_widget.dart';
 import 'package:rkom_kampus/gen/assets.gen.dart';
 import 'package:rkom_kampus/gen/fonts.gen.dart';
@@ -26,8 +27,6 @@ class _LoginBottomSheetState extends State<LoginBottomSheet>
 
   late final AnimationController _animationController;
   late final Animation<Offset> _animation;
-  final TextEditingController _nameEmailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
 
   @override
   void initState() {
@@ -71,65 +70,78 @@ class _LoginBottomSheetState extends State<LoginBottomSheet>
               title2: 'Your journey is finally here'
             ),
             Form(
-              child: BlocBuilder<AuthBloc, AuthState>(
-                builder: (context, state) {
-                  if (state is AuthLoginView) {
-                    return Column(
-                      children: [
-                        customTextField(
-                          label: 'Username or Email', 
-                          controller: _nameEmailController,
-                          keyboardType: TextInputType.emailAddress,
-                          onChanged: (val) {
-                            context.read<AuthBloc>().add(AuthEmailChanged(val));
-                          }
-                        ),
-                        const SizedBox(height: 10),
-                        customTextField(
-                          label: 'Enter your password', 
-                          controller: _passwordController,
-                          obscureText: state.isObscure,
-                          suffixIcon: IconButton(
-                            onPressed: () {
-                              context.read<AuthBloc>().add(AuthToggleObscureText());
-                            }, 
-                            icon: SvgPicture.asset(
-                              state.isObscure
-                                ? Assets.images.common.eye
-                                : Assets.images.common.eyeOff,
-                            )
-                          ),
-                          onChanged: (val) {
-                            context.read<AuthBloc>().add(AuthPasswordChanged(val));
-                          }
-                        ),
-                        const SizedBox(height: 5),
-                        customTextButton(
-                          label1: '', 
-                          label2: 'Forgot Password?', 
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          isSpread: false,
-                          onTap: () {}
-                        ),
-                        customElevatedButton(
-                          onPressed: () {
-                            context.read<AuthBloc>().add(AuthLogin(
-                              email: state.email, 
-                              password: state.password
-                              )
+              child: BlocBuilder<AuthFormCubit, AuthFormState>(
+                builder: (context, formState) {
+                  return Column(
+                    children: [
+                      BlocBuilder<AuthBloc, AuthState>(
+                        builder: (context, state) {
+                          if (state is AuthFailure) {
+                            return Text(
+                              state.message,
+                              style: const TextStyle(
+                                color: Colors.red,
+                                fontSize: 14,
+                                fontFamily: FontFamily.montserratRegular,
+                              ),
                             );
+                          } else {
+                            return const SizedBox.shrink();
+                          }
+                        }
+                      ),
+                      customTextField(
+                        label: 'Username or Email', 
+                        initialValue: formState.email,
+                        keyboardType: TextInputType.emailAddress,
+                        onChanged: (val) {
+                          context.read<AuthFormCubit>().updateEmail(val);
+                        }
+                      ),
+                      const SizedBox(height: 10),
+                      customTextField(
+                        label: 'Enter your password', 
+                        initialValue: formState.password,
+                        obscureText: formState.isObscure,
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            context.read<AuthFormCubit>().toggleObscureText();
                           }, 
-                          label: 'Login'
+                          icon: SvgPicture.asset(
+                            formState.isObscure
+                              ? Assets.images.common.eye
+                              : Assets.images.common.eyeOff,
+                          )
                         ),
-                        customTextButton(
-                          label1: 'Don\'t have an account? ', 
-                          label2: 'Sign Up', 
-                          onTap: () {}
-                        ),
-                      ],
-                    ); 
-                  }
-                  return const SizedBox.shrink();
+                        onChanged: (val) {
+                          context.read<AuthFormCubit>().updatePassword(val);
+                        }
+                      ),
+                      const SizedBox(height: 5),
+                      customTextButton(
+                        label1: '', 
+                        label2: 'Forgot Password?', 
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        isSpread: false,
+                        onTap: () {}
+                      ),
+                      customElevatedButton(
+                        onPressed: () {
+                          context.read<AuthBloc>().add(AuthLogin(
+                            email: formState.email, 
+                            password: formState.password
+                            )
+                          );
+                        }, 
+                        label: 'Login'
+                      ),
+                      customTextButton(
+                        label1: 'Don\'t have an account? ', 
+                        label2: 'Sign Up', 
+                        onTap: () {}
+                      ),
+                    ],
+                  ); 
                 },
               )
             ),

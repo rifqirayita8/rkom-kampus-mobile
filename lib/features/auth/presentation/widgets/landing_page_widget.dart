@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rkom_kampus/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:rkom_kampus/features/auth/presentation/bloc/auth_view_cubit.dart';
 import 'package:rkom_kampus/gen/fonts.gen.dart';
 import 'package:rkom_kampus/utils/colors.dart';
 import 'package:rkom_kampus/widgets/custom_elevated_button.dart';
@@ -31,9 +32,7 @@ class LandingPageWidget extends StatelessWidget {
             child: Column(
               children: [
                 customElevatedButton(
-                  onPressed: () {
-                    context.read<AuthBloc>().add(AuthShowLogin());
-                  }, 
+                  onPressed: () => context.read<AuthViewCubit>().showLogin(),
                   label: 'Login',
                   textColor: AppColor.primaryColor,
                   backgroundColor: AppColor.secondaryColor,
@@ -44,7 +43,7 @@ class LandingPageWidget extends StatelessWidget {
                   label2: 'Sign Up',
                   textColor1: Colors.white,
                   textColor2: AppColor.hippieBlue, 
-                  onTap: () => context.read<AuthBloc>().add(AuthShowRegister())
+                  onTap: () => context.read<AuthViewCubit>().showRegister(),
                 ),
               ],
             ),

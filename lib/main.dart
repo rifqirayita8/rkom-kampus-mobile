@@ -7,6 +7,8 @@ import 'package:rkom_kampus/gen/fonts.gen.dart';
 import 'package:rkom_kampus/utils/routes.dart';
 
 import 'core/di/init_injection_imports.dart';
+import 'features/auth/presentation/bloc/auth_form_cubit.dart';
+import 'features/auth/presentation/bloc/auth_view_cubit.dart';
 
 void main() async {
   await initInjection();
@@ -24,6 +26,12 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => myInjection<AuthBloc>()
+        ),
+        BlocProvider(
+          create: (context) => myInjection<AuthViewCubit>() 
+        ),
+        BlocProvider(
+          create: (context) => myInjection<AuthFormCubit>()
         )
       ],
       child: MaterialApp(

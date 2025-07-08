@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rkom_kampus/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:rkom_kampus/features/auth/presentation/bloc/auth_view_cubit.dart';
+import 'package:rkom_kampus/features/auth/presentation/pages/coba.dart';
 import 'package:rkom_kampus/features/auth/presentation/widgets/landing_page_widget.dart';
 import 'package:rkom_kampus/features/auth/presentation/widgets/login_bottom_sheet.dart';
 import 'package:rkom_kampus/gen/assets.gen.dart';
 
-import 'coba.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -24,34 +25,33 @@ class LoginPage extends StatelessWidget {
               fit: BoxFit.fill,
             )
           ),
-          BlocConsumer<AuthBloc, AuthState>(
+          BlocListener<AuthBloc, AuthState>(
             listener: (context, state) {
               if (state is AuthSuccess) {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const Coba()));
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => const Coba())
+                );
               }
             },
-            builder: (context, state) {
-              if (state is AuthLandingView) {
-                return const LandingPageWidget();
-              } else if (state is AuthLoginView) {
-                return Align(
-                  alignment: Alignment.bottomCenter,
-                  child: const LoginBottomSheet());
-              } else if (state is AuthRegisterView) {
-                return const Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Center(
-                      child: Text('Register View', 
-                        style: TextStyle(
-                          fontSize: 96 
-                        ),
-                      ),
+            child: const SizedBox.shrink(),
+          ),
+          BlocBuilder<AuthViewCubit, AuthView>(
+            builder: (context, viewState) {
+              switch (viewState) {
+                case AuthView.landing:
+                  return const LandingPageWidget();
+                case AuthView.login:
+                  return Align(
+                    alignment: Alignment.bottomCenter,
+                    child: const LoginBottomSheet());
+                case AuthView.register:
+                  return const Center(
+                    child: Text(
+                      'Register Page',
+                      style: TextStyle(fontSize: 24, color: Colors.white),
                     ),
-                  ],
-                );
-              } 
-              return const SizedBox.shrink();
+                  );
+              }
             }
           ),
           if (context.watch<AuthBloc>().state is AuthLoading) ...[

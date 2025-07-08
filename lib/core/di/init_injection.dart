@@ -25,4 +25,12 @@ Future<void> initInjection() async {
   myInjection.registerLazySingleton<AuthRemoteDatasource>(
     () => AuthRemoteDatasourceImpl(dio: myInjection())
   );
+
+  myInjection.registerFactory<AuthViewCubit>(
+    () => AuthViewCubit(),
+  );
+
+  myInjection.registerFactory<AuthFormCubit>(
+    () => AuthFormCubit(),
+  );
 }

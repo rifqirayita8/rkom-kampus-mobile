@@ -6,5 +6,8 @@ import 'package:rkom_kampus/features/auth/domain/repositories/auth_repository.da
 import 'package:rkom_kampus/features/auth/domain/usecases/user_login.dart';
 import 'package:rkom_kampus/features/auth/presentation/bloc/auth_bloc.dart';
 
+import '../../features/auth/presentation/bloc/auth_form_cubit.dart';
+import '../../features/auth/presentation/bloc/auth_view_cubit.dart';
+
 
 part 'init_injection.dart';
