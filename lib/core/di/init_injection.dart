@@ -1,12 +1,28 @@
-import 'package:get_it/get_it.dart';
-import 'package:rkom_kampus/features/auth/presentation/bloc/auth_bloc.dart';
+part of 'init_injection_imports.dart';
 
 var myInjection= GetIt.instance;
 
 Future<void> initInjection() async {
+
+  myInjection.registerLazySingleton(
+    () => Dio()
+  );
+
   myInjection.registerFactory(
     () => AuthBloc(
-      
+      userLogin: myInjection(),
     ),
+  );
+
+  myInjection.registerLazySingleton(
+    () => UserLogin(authRepository: myInjection()),
+  );
+
+  myInjection.registerLazySingleton<AuthRepository>(
+    () => AuthRepositoryImpl(authRemoteDatasource: myInjection()),
+  );
+
+  myInjection.registerLazySingleton<AuthRemoteDatasource>(
+    () => AuthRemoteDatasourceImpl(dio: myInjection())
   );
 }

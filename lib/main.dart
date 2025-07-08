@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rkom_kampus/core/di/init_injection.dart';
 import 'package:rkom_kampus/core/observer.dart';
 import 'package:rkom_kampus/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:rkom_kampus/features/auth/presentation/pages/login_page.dart';
 import 'package:rkom_kampus/gen/fonts.gen.dart';
 import 'package:rkom_kampus/utils/routes.dart';
+
+import 'core/di/init_injection_imports.dart';
 
 void main() async {
   await initInjection();

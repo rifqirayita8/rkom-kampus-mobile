@@ -14,10 +14,30 @@ final class AuthLandingView extends AuthState {
 }
 
 final class AuthLoginView extends AuthState {
-  const AuthLoginView();
+  final String email;
+  final String password;
+  final bool isObscure;
+
+  const AuthLoginView({
+    this.email = '',
+    this.password = '',
+    this.isObscure = true,
+  });
+
+  AuthLoginView copyWith({
+    String? email,
+    String? password,
+    bool? isObscure,
+  }) {
+    return AuthLoginView(
+      email: email ?? this.email,
+      password: password ?? this.password,
+      isObscure: isObscure ?? this.isObscure,
+    );
+  }
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [email, password, isObscure];
 }
 
 final class AuthRegisterView extends AuthState {
@@ -38,6 +58,15 @@ final class AuthSuccess extends AuthState {
   final String message;
 
   const AuthSuccess({required this.message});
+
+  @override
+  List<Object> get props => [message];
+}
+
+final class AuthFailure extends AuthState {
+  final String message;
+
+  const AuthFailure({required this.message});
 
   @override
   List<Object> get props => [message];

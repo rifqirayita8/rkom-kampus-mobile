@@ -32,7 +32,7 @@ class LandingPageWidget extends StatelessWidget {
               children: [
                 customElevatedButton(
                   onPressed: () {
-                    context.read<AuthBloc>().add(AuthLogin(email: 'email', password: 'password'));
+                    context.read<AuthBloc>().add(AuthShowLogin());
                   }, 
                   label: 'Login',
                   textColor: AppColor.primaryColor,
@@ -44,7 +44,7 @@ class LandingPageWidget extends StatelessWidget {
                   label2: 'Sign Up',
                   textColor1: Colors.white,
                   textColor2: AppColor.hippieBlue, 
-                  onTap: () => context.read<AuthBloc>().add(AuthRegister(name: 'name', email: 'email', password: 'password'))
+                  onTap: () => context.read<AuthBloc>().add(AuthShowRegister())
                 ),
               ],
             ),

@@ -7,11 +7,13 @@ Widget customTextField({
   Widget? suffixIcon,
   TextInputType? keyboardType,
   bool? obscureText = false,
+  void Function(String)? onChanged,
 }) {
   return TextFormField(
     controller: controller,
     obscureText: obscureText ?? false,
     keyboardType: keyboardType,
+    onChanged: onChanged,
     decoration: InputDecoration(
       floatingLabelBehavior: FloatingLabelBehavior.never,
       filled: true,
