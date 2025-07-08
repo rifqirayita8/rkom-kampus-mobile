@@ -77,17 +77,36 @@ class _LoginBottomSheetState extends State<LoginBottomSheet>
                             BlocBuilder<AuthBloc, AuthState>(
                               builder: (context, state) {
                                 if (state is AuthFailure) {
-                                  return Text(
-                                    state.message,
-                                    style: const TextStyle(
-                                      color: Colors.red,
-                                      fontSize: 14,
-                                      fontFamily: FontFamily.montserratRegular,
+                                  return Container(
+                                    margin: const EdgeInsets.only(bottom: 16),
+                                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                                    decoration: BoxDecoration(
+                                      color: Colors.red.shade50,
+                                      border: Border.all(color: Colors.red.shade300),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Row(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Icon(Icons.error_outline, color: Colors.red.shade400),
+                                        const SizedBox(width: 8),
+                                        Expanded(
+                                          child: Text(
+                                            state.message,
+                                            style: const TextStyle(
+                                              color: Colors.red,
+                                              fontSize: 14,
+                                              fontFamily: FontFamily.montserratRegular,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   );
                                 } else {
                                   return const SizedBox.shrink();
                                 }
+
                               }
                             ),
                             customTextField(
