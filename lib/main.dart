@@ -1,8 +1,10 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rkom_kampus/core/observer.dart';
 import 'package:rkom_kampus/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:rkom_kampus/features/auth/presentation/pages/login_page.dart';
+import 'package:rkom_kampus/firebase_options.dart';
 import 'package:rkom_kampus/gen/fonts.gen.dart';
 import 'package:rkom_kampus/utils/routes.dart';
 
@@ -11,6 +13,10 @@ import 'features/auth/presentation/bloc/auth_form_cubit.dart';
 import 'features/auth/presentation/bloc/auth_view_cubit.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await initInjection();
   Bloc.observer= MyObserver();
   runApp(const MyApp());

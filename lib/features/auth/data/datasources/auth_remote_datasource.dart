@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:rkom_kampus/core/errors/exception.dart';
 import 'package:rkom_kampus/core/interceptor/dio_interceptor.dart';
 
@@ -12,6 +13,17 @@ abstract class AuthRemoteDatasource {
     String fullName,
     String email,
     String password,
+  );
+
+  Future<void> authEmailLogin(
+    String email,
+    String password,
+  );
+
+  Future<void> authEmailRegister(
+    String fullName,
+    String email,
+    String password
   );
 }
 
@@ -72,6 +84,34 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
 
     }on DioException catch (e) {
       throw GeneralException(message: e.response!.data['message'] ?? 'An error occurred');
+    }
+  }
+
+  @override
+  Future<void> authEmailLogin(String email, String password) async {
+    try {
+      final userCredential= await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email, 
+        password: password
+      );
+      print(userCredential);
+
+    } on FirebaseAuthException catch (e) {
+      throw GeneralException(message: e.message!);
+    }
+  }
+  
+  @override
+  Future<void> authEmailRegister(String fullName, String email, String password) async {
+    try {
+      final userCredential= await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email, 
+        password: password
+      );
+      print(userCredential);
+
+    } on FirebaseAuthException catch (e) {
+      throw GeneralException(message: e.message!);
     }
   }
 }

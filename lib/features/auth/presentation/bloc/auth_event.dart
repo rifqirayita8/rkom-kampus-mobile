@@ -28,6 +28,27 @@ final class AuthRegister extends AuthEvent {
   List<Object> get props => [fullName, email, password];
 }
 
+final class AuthEmailLogin extends AuthEvent {
+  final String email;
+  final String password;
+
+  const AuthEmailLogin({required this.email, required this.password});
+
+  @override
+  List<Object> get props => [email, password];
+}
+
+final class AuthEmailRegister extends AuthEvent {
+  final String fullName;
+  final String email;
+  final String password;
+
+  const AuthEmailRegister({required this.fullName ,required this.email, required this.password});
+
+  @override
+  List<Object> get props => [fullName ,email, password];
+}
+
 final class AuthReset extends AuthEvent {
   const AuthReset();
 

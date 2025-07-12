@@ -12,6 +12,8 @@ Future<void> initInjection() async {
     () => AuthBloc(
       userLogin: myInjection(),
       userRegister: myInjection(),
+      userEmailLogin: myInjection(),
+      userEmailRegister: myInjection(),
     ),
   );
 
@@ -21,6 +23,14 @@ Future<void> initInjection() async {
 
   myInjection.registerLazySingleton(
     () => UserRegister(authRepository: myInjection()),
+  );
+
+  myInjection.registerLazySingleton(
+    () => UserEmailLogin(authRepository: myInjection()),
+  );
+
+  myInjection.registerLazySingleton(
+    () => UserEmailRegister(authRepository: myInjection()),
   );
 
   myInjection.registerLazySingleton<AuthRepository>(

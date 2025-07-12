@@ -29,4 +29,26 @@ class AuthRepositoryImpl extends AuthRepository{
       return left(Failure(e.message));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> authEmailLogin(String email, String password) async {
+    try {
+      final response= await authRemoteDatasource.authEmailLogin(email, password);
+      return right(response);
+
+    } on GeneralException catch (e) {
+      return left(Failure(e.message));
+    }
+  }
+  
+  @override
+  Future<Either<Failure, void>> authEmailRegister(String fullName, String email, String password) async {
+    try {
+      final response= await authRemoteDatasource.authEmailRegister(fullName, email, password);
+      return right(response);
+
+    } on GeneralException catch (e) {
+      return left(Failure(e.message));
+    }
+  }
 }

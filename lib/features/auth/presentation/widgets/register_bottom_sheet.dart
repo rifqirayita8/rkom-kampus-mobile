@@ -154,13 +154,19 @@ class _RegisterBottomSheetState extends State<RegisterBottomSheet>
                             const SizedBox(height: 50),
                             customElevatedButton(
                               onPressed: () {
-                                context.read<AuthBloc>().add(
-                                  AuthRegister(
-                                    fullName: formState.fullName, 
-                                    email: formState.email, 
-                                    password: formState.password
-                                    )
-                                  );
+                                // context.read<AuthBloc>().add(
+                                //   AuthRegister(
+                                //     fullName: formState.fullName.trim(), 
+                                //     email: formState.email.trim(), 
+                                //     password: formState.password.trim()
+                                //     )
+                                //   );
+                                context.read<AuthBloc>().add(AuthEmailRegister(
+                                  fullName: formState.fullName.trim(), 
+                                  email: formState.email.trim(), 
+                                  password: formState.password.trim()
+                                ));
+                                context.read<AuthFormCubit>().reset();
                               }, 
                               label: 'Sign Up'
                             ),

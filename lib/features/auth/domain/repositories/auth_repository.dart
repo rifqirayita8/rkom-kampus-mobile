@@ -12,4 +12,15 @@ abstract class AuthRepository {
     String email,
     String password,
   );
+
+  Future<Either<Failure, void>> authEmailLogin(
+    String email,
+    String password,
+  );
+
+  Future<Either<Failure, void>> authEmailRegister(
+    String fullName,
+    String email,
+    String password
+  );
 }

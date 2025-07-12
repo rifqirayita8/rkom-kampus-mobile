@@ -146,11 +146,16 @@ class _LoginBottomSheetState extends State<LoginBottomSheet>
                             ),
                             customElevatedButton(
                               onPressed: () {
-                                context.read<AuthBloc>().add(AuthLogin(
-                                  email: formState.email, 
-                                  password: formState.password
-                                  )
-                                );
+                                // context.read<AuthBloc>().add(AuthLogin(
+                                //   email: formState.email.trim(), 
+                                //   password: formState.password.trim()
+                                //   )
+                                // );
+                                context.read<AuthBloc>().add(AuthEmailLogin(
+                                  email: formState.email.trim(), 
+                                  password: formState.password.trim()
+                                ));
+                                context.read<AuthFormCubit>().reset();
                               }, 
                               label: 'Login'
                             ),
