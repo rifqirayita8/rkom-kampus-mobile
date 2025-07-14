@@ -18,6 +18,7 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final state= context.watch<AuthBloc>().state;
     return Scaffold(
       body: Stack(
         children: [
@@ -54,12 +55,12 @@ class LoginPage extends StatelessWidget {
               }
             }
           ),
-          if (context.watch<AuthBloc>().state is AuthLoading) ...[
+          if (state is AuthLoading) ...[
             Positioned.fill(
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
                 child: Container(
-                  color: Colors.black.withOpacity(0.3),
+                  color: Colors.black.withValues(alpha: 0.3),
                   alignment: Alignment.center,
                   child: const CircularProgressIndicator(),
                 ),

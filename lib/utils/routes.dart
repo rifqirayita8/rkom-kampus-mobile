@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:rkom_kampus/features/auth/presentation/pages/coba.dart';
 import 'package:rkom_kampus/features/auth/presentation/pages/login_page.dart';
 
 class AppRoutes {
   // static const String initial = '/';
   static const String landingPage= '/'; 
+  static const String homePage = '/home';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -11,6 +13,12 @@ class AppRoutes {
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => const LoginPage()
+        );
+
+      case AppRoutes.homePage:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => const Coba() // Replace with your HomePage widget
         );
         
         default:
