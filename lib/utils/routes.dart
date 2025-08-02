@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:rkom_kampus/features/auth/presentation/pages/coba.dart';
 import 'package:rkom_kampus/features/auth/presentation/pages/login_page.dart';
+
+import '../features/homepage/presentation/pages/homepage.dart';
 
 class AppRoutes {
   // static const String initial = '/';
@@ -18,7 +19,7 @@ class AppRoutes {
       case AppRoutes.homePage:
         return MaterialPageRoute(
           settings: settings,
-          builder: (_) => const Coba() // Replace with your HomePage widget
+          builder: (_) => const Homepage()
         );
         
         default:

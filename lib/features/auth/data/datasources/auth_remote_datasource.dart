@@ -127,6 +127,18 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
       );
 
       final userCredential= await FirebaseAuth.instance.signInWithCredential(credential);
+      
+      if (userCredential.user != null) {
+        final userDocRef= FirebaseFirestore.instance.collection('users').doc(userCredential.user!.uid);
+        final docSnapshot= await userDocRef.get();
+
+        if(!docSnapshot.exists) {
+          await userDocRef.set({
+            'username': userCredential.user!.displayName ?? 'anon',
+            'uid': userCredential.user!.uid,
+          });
+        }
+      }
 
     } on GoogleSignInException catch (e) {
       throw GeneralException(message: e.description ?? 'Login Google gagal');
@@ -148,10 +160,8 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
 
       if(!docSnapshot.exists) {
         await userDocRef.set({
-          'name': fullName,
-          'email': userCredential.user!.email,
+          'username': fullName,
           'uid': userCredential.user!.uid,
-          'createdAt': FieldValue.serverTimestamp(),
         });
       }
 

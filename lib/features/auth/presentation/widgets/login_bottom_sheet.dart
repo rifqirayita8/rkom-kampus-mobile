@@ -14,7 +14,6 @@ import 'package:rkom_kampus/widgets/custom_text_button.dart';
 import 'package:rkom_kampus/widgets/custom_textfield.dart';
 import '../../../../utils/colors.dart';
 import '../bloc/auth_view_cubit.dart';
-import '../pages/coba.dart';
 
 class LoginBottomSheet extends StatefulWidget {
   const LoginBottomSheet({super.key});
@@ -146,6 +145,12 @@ class _LoginBottomSheetState extends State<LoginBottomSheet>
                             ),
                             customElevatedButton(
                               onPressed: () {
+
+                              }, 
+                              label: 'Login'
+                            ),
+                            customElevatedButton(
+                              onPressed: () {
                                 // context.read<AuthBloc>().add(AuthLogin(
                                 //   email: formState.email.trim(), 
                                 //   password: formState.password.trim()
@@ -157,7 +162,7 @@ class _LoginBottomSheetState extends State<LoginBottomSheet>
                                 ));
                                 context.read<AuthFormCubit>().reset();
                               }, 
-                              label: 'Login'
+                              label: 'Login with Google'
                             ),
                             const SizedBox(height: 10),
                             customTextButton(
